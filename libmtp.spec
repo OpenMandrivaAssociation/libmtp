@@ -1,6 +1,6 @@
 %define	name	libmtp
-%define	version	0.1.3
-%define release %mkrel 4
+%define	version	0.1.5
+%define release %mkrel 1
 %define major	5
 %define	libname	%mklibname mtp %major
 
@@ -11,8 +11,8 @@ Release:	%{release}
 Group:		System/Libraries
 License:	LGPL
 URL:		http://libmtp.sourceforge.net/
-Source0:	%{name}-%{version}.tar.bz2
-Patch0:		archos.patch
+Source0:	%{name}-%{version}.tar.gz
+#Patch0:		archos.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
 
@@ -58,7 +58,7 @@ This package contains documentation of libmtp.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 
 %build
 %configure --enable-hotplugging --disable-static --program-prefix=mtp-
@@ -68,7 +68,6 @@ This package contains documentation of libmtp.
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 #rm -rf $RPM_BUILD_ROOT%{_docdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
