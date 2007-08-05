@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	0.2.0
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	6
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -34,6 +34,8 @@ players.
 %package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
+Obsoletes:	%mklibname mtp 5
+Obsoletes:	%mklibname mtp 0
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
@@ -44,7 +46,8 @@ Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%{name}-devel < %{version}
+Obsoletes:	%mklibname -d mtp 5
+Obsoletes:	%mklibname -d mtp 0
 
 %description -n	%{develname}
 This package contains the headers that programmers will need to develop
