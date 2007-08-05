@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	0.2.0
-%define release %mkrel 2
+%define release %mkrel 3
 %define major	6
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -13,7 +13,6 @@ Group:		System/Libraries
 License:	LGPL
 URL:		http://libmtp.sourceforge.net/
 Source0:	%{name}-%{version}.tar.gz
-#Patch0:		archos.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
 
@@ -44,7 +43,7 @@ linked with %{name}.
 %package -n	%{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d mtp 5
 Obsoletes:	%mklibname -d mtp 0
@@ -60,17 +59,27 @@ Group: Books/Computer books
 %description doc
 This package contains documentation of libmtp.
 
+%package utils
+Summary: Tools provided by libmtp
+Group: System/Libraries
+Requires: %{libname} = %{version}-%{release}
+
+%description utils
+This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
 
 %build
-%configure --enable-hotplugging --disable-static --program-prefix=mtp-
+%configure2_5x --enable-hotplugging --disable-static --program-prefix=mtp-
 %make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
+
+mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
+mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
@@ -81,9 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n %{libname}
 %defattr(-,root,root)
 %doc AUTHORS COPYING README
-%{_bindir}/*
-%{_libdir}/libmtp.so.%{major}
-%{_libdir}/libmtp.so.%{major}.*
+%{_libdir}/libmtp.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -94,4 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc
 %defattr(-,root,root)
-%doc %{_datadir}/doc/*
+%doc %{_datadir}/doc/%{name}/html
+
+%files utils
+%defattr(-,root,root)
+%{_bindir}/*
