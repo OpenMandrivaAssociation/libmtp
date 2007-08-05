@@ -1,8 +1,9 @@
 %define	name	libmtp
-%define	version	0.1.5
+%define	version	0.2.0
 %define release %mkrel 1
-%define major	5
+%define major	6
 %define	libname	%mklibname mtp %major
+%define develname %mklibname -d mtp
 
 Name:		%{name}
 Summary:	Implementation of Microsoft's Media Transfer Protocol
@@ -38,13 +39,14 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{name}-devel < %{version}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
@@ -58,7 +60,6 @@ This package contains documentation of libmtp.
 
 %prep
 %setup -q
-#%patch0 -p1
 
 %build
 %configure --enable-hotplugging --disable-static --program-prefix=mtp-
@@ -67,7 +68,6 @@ This package contains documentation of libmtp.
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
-#rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
@@ -82,7 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmtp.so.%{major}
 %{_libdir}/libmtp.so.%{major}.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/%{name}.h
 %{_libdir}/%{name}.so
@@ -91,6 +91,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc
 %defattr(-,root,root)
-%{_datadir}/doc/*
-
-
+%doc %{_datadir}/doc/*
