@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	0.2.1
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	6
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -10,9 +10,10 @@ Summary:	Implementation of Microsoft's Media Transfer Protocol
 Version:	%{version}
 Release:	%{release}
 Group:		System/Libraries
-License:	LGPL
+License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	%{name}-%{version}.tar.gz
+Source1:	libmtp.perms
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
 
@@ -35,6 +36,7 @@ Summary:	Main library for %{name}
 Group:		System/Libraries
 Obsoletes:	%mklibname mtp 5
 Obsoletes:	%mklibname mtp 0
+Requires:	%{name}-utils = %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
@@ -73,10 +75,26 @@ This package contains various tools provided by libmtp.
 %build
 %configure2_5x --enable-hotplugging --disable-static --program-prefix=mtp-
 %make
+#-- FEDORA COPY
+# Remove permissions from symlink in udev script, we use
+# PAM to fix the permissions instead.
+examples/hotplug -a"SYMLINK+=\"libmtp-%k\"" > libmtp.rules
+#-- FEDORA COPY
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
+
+#-- FEDORA COPY
+# Install udev rules file.
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
+install -p -m 644 libmtp.rules $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/60-libmtp.rules
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/hal/fdi/information/10freedesktop
+install -p -m 644 libmtp.fdi $RPM_BUILD_ROOT%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
+# Install device permissions
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/security/console.perms.d/
+install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/security/console.perms.d/60-libmtp.perms
+#-- FEDORA COPY
 
 mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
 mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
@@ -105,4 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils
 %defattr(-,root,root)
+%config(noreplace) %{_sysconfdir}/udev/rules.d/*
+%config(noreplace) %{_sysconfdir}/security/console.perms.d/*
+%config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 %{_bindir}/*
