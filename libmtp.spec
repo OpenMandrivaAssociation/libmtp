@@ -12,7 +12,7 @@ Release:	%{release}
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
-Source0:	%{name}-%{version}.tar.gz
+Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Source1:	libmtp.perms
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
