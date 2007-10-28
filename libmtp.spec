@@ -36,7 +36,7 @@ Summary:	Main library for %{name}
 Group:		System/Libraries
 Obsoletes:	%mklibname mtp 5
 Obsoletes:	%mklibname mtp 0
-Requires:	%{name}-utils = %{version}-%{release}
+Requires:	%{name}-utils >= %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
