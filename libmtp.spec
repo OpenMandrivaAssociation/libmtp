@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	0.3.1
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -65,6 +65,7 @@ This package contains documentation of libmtp.
 Summary: Tools provided by libmtp
 Group: System/Libraries
 Requires: %{libname} = %{version}-%{release}
+Provides: mtp-utils = %{version}-%{release}
 
 %description utils
 This package contains various tools provided by libmtp.
