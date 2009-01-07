@@ -14,6 +14,7 @@ License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Source1:	libmtp.perms
+Patch0:		libmtp-0.3.5-fix-str-fmt.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
 
@@ -73,9 +74,10 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
-%configure2_5x --enable-hotplugging --disable-static --program-prefix=mtp-
+%configure2_5x --disable-static --program-prefix=mtp-
 %make
 #-- FEDORA COPY
 # Remove permissions from symlink in udev script, we use
