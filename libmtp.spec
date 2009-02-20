@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	0.3.6
-%define release %mkrel 2
+%define release %mkrel 3
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
