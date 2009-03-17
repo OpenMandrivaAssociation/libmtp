@@ -1,6 +1,6 @@
 %define	name	libmtp
-%define	version	0.3.6
-%define release %mkrel 3
+%define	version	0.3.7
+%define release %mkrel 1
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -86,25 +86,25 @@ examples/hotplug -a"SYMLINK+=\"libmtp-%k\"" > libmtp.rules
 #-- FEDORA COPY
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 #-- FEDORA COPY
 # Install udev rules file.
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
-install -p -m 644 libmtp.rules $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/60-libmtp.rules
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/hal/fdi/information/10freedesktop
-install -p -m 644 libmtp.fdi $RPM_BUILD_ROOT%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
+mkdir -p %{buildroot}%{_sysconfdir}/udev/rules.d
+install -p -m 644 libmtp.rules %{buildroot}%{_sysconfdir}/udev/rules.d/60-libmtp.rules
+mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
+install -p -m 644 libmtp.fdi %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 # Install device permissions
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/security/console.perms.d/
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/security/console.perms.d/60-libmtp.perms
+mkdir -p %{buildroot}%{_sysconfdir}/security/console.perms.d/
+install -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/security/console.perms.d/60-libmtp.perms
 #-- FEDORA COPY
 
 mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
 mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
 
 %clean 
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
