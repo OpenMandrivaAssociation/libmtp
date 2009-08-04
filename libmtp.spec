@@ -1,5 +1,5 @@
 %define	name	libmtp
-%define	version	0.3.7
+%define	version	1.0.0
 %define release %mkrel 1
 %define major	8
 %define	libname	%mklibname mtp %major
@@ -14,7 +14,7 @@ License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Source1:	libmtp.perms
-Patch0:		libmtp-0.3.5-fix-str-fmt.patch
+#Patch0:		libmtp-0.3.5-fix-str-fmt.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	pkgconfig libusb-devel doxygen
 
@@ -74,7 +74,7 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
-%patch0 -p0
+#%patch0 -p0
 
 %build
 %configure2_5x --disable-static --program-prefix=mtp-
@@ -95,9 +95,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/udev/rules.d
 install -p -m 644 libmtp.rules %{buildroot}%{_sysconfdir}/udev/rules.d/60-libmtp.rules
 mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
 install -p -m 644 libmtp.fdi %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
-# Install device permissions
-mkdir -p %{buildroot}%{_sysconfdir}/security/console.perms.d/
-install -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/security/console.perms.d/60-libmtp.perms
 #-- FEDORA COPY
 
 mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
@@ -132,6 +129,5 @@ rm -rf %{buildroot}
 %files utils
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/udev/rules.d/*
-%config(noreplace) %{_sysconfdir}/security/console.perms.d/*
 %config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 %{_bindir}/*
