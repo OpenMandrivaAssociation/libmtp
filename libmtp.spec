@@ -18,7 +18,9 @@ Source1:	libmtp.perms
 # https://qa.mandriva.com/show_bug.cgi?id=53177
 Patch0:		libmtp-1.0.0-fix-symlinks.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	pkgconfig libusb-devel doxygen
+BuildRequires:	libusb-devel doxygen
+#gw for aclocal:
+BuildRequires:  gettext-devel
 
 %description
 libmtp is an implementation of Microsoft's Media Transfer Protocol (MTP)
