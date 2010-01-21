@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	1.0.1
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -13,7 +13,6 @@ Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
-Source1:	libmtp.perms
 #gw fix examples symlinks
 # https://qa.mandriva.com/show_bug.cgi?id=53177
 Patch0:		libmtp-1.0.0-fix-symlinks.patch
@@ -78,7 +77,7 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0 -p1 -b .symlinks
 autoreconf -fi
 
 %build
@@ -87,7 +86,7 @@ autoreconf -fi
 #-- FEDORA COPY
 # Remove permissions from symlink in udev script, we use
 # PAM to fix the permissions instead.
-examples/hotplug -a"SYMLINK+=\"libmtp-%k\"" > libmtp.rules
+examples/hotplug -a"SYMLINK+=\"libmtp-%k\", ENV{ACL_MANAGE}=\"1\"" > libmtp.rules
 #-- FEDORA COPY
 
 %install
@@ -96,8 +95,8 @@ rm -rf %{buildroot}
 
 #-- FEDORA COPY
 # Install udev rules file.
-mkdir -p %{buildroot}%{_sysconfdir}/udev/rules.d
-install -p -m 644 libmtp.rules %{buildroot}%{_sysconfdir}/udev/rules.d/60-libmtp.rules
+mkdir -p %{buildroot}/lib/udev/rules.d
+install -p -m 644 libmtp.rules %{buildroot}/lib/udev/rules.d/60-libmtp.rules
 mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
 install -p -m 644 libmtp.fdi %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 #-- FEDORA COPY
@@ -133,6 +132,6 @@ rm -rf %{buildroot}
 
 %files utils
 %defattr(-,root,root)
-%config(noreplace) %{_sysconfdir}/udev/rules.d/*
+/lib/udev/rules.d/*.rules
 %config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 %{_bindir}/*
