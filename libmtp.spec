@@ -1,6 +1,6 @@
 %define	name	libmtp
-%define	version	1.0.1
-%define release %mkrel 2
+%define	version	1.0.2
+%define release %mkrel 1
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -13,9 +13,6 @@ Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
-#gw fix examples symlinks
-# https://qa.mandriva.com/show_bug.cgi?id=53177
-Patch0:		libmtp-1.0.0-fix-symlinks.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libusb-devel doxygen
 #gw for aclocal:
@@ -77,8 +74,6 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
-%patch0 -p1 -b .symlinks
-autoreconf -fi
 
 %build
 %configure2_5x --disable-static --program-prefix=mtp-
