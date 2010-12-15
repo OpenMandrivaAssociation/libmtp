@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	1.0.3
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -13,6 +13,7 @@ Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Patch0:		01-devices_small_fixes.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libusb-devel doxygen
 #gw for aclocal:
@@ -74,6 +75,7 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure2_5x --disable-static --program-prefix=mtp-
