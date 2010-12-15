@@ -1,6 +1,6 @@
 %define	name	libmtp
 %define	version	1.0.3
-%define release %mkrel 2
+%define release %mkrel 3
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -83,7 +83,7 @@ This package contains various tools provided by libmtp.
 #-- FEDORA COPY
 # Remove permissions from symlink in udev script, we use
 # PAM to fix the permissions instead.
-examples/hotplug -a"SYMLINK+=\"libmtp-%k\", ENV{ACL_MANAGE}=\"1\"" > libmtp.rules
+examples/hotplug -a"SYMLINK+=\"libmtp-%k\", ENV{ID_MTP_DEVICE}=\"1\", ENV{ID_MEDIA_PLAYER}=\"1\", TAG+=\"udev-acl\"" > libmtp.rules
 #-- FEDORA COPY
 
 %install
