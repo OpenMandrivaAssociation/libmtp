@@ -1,6 +1,6 @@
 %define	name	libmtp
-%define	version	1.0.3
-%define release %mkrel 3
+%define	version	1.0.4
+%define release %mkrel 1
 %define major	8
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
@@ -75,16 +75,10 @@ This package contains various tools provided by libmtp.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%configure2_5x --disable-static --program-prefix=mtp-
+%configure2_5x --disable-static
 %make
-#-- FEDORA COPY
-# Remove permissions from symlink in udev script, we use
-# PAM to fix the permissions instead.
-examples/hotplug -a"SYMLINK+=\"libmtp-%k\", ENV{ID_MTP_DEVICE}=\"1\", ENV{ID_MEDIA_PLAYER}=\"1\", TAG+=\"udev-acl\"" > libmtp.rules
-#-- FEDORA COPY
 
 %install
 rm -rf %{buildroot}
@@ -132,3 +126,4 @@ rm -rf %{buildroot}
 /lib/udev/rules.d/*.rules
 %config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 %{_bindir}/*
+/lib/udev/mtp-probe
