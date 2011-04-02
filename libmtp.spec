@@ -1,5 +1,5 @@
 %define	name	libmtp
-%define	version	1.0.4
+%define	version	1.0.6
 %define release %mkrel 1
 %define major	8
 %define	libname	%mklibname mtp %major
@@ -18,6 +18,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libusb-devel doxygen
 #gw for aclocal:
 BuildRequires:  gettext-devel
+Obsoletes:	%{name}-doc < %{version}
 
 %description
 libmtp is an implementation of Microsoft's Media Transfer Protocol (MTP)
@@ -57,13 +58,6 @@ Obsoletes:	%mklibname -d mtp 0
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package doc
-Summary: Libmtp documentation
-Group: Books/Computer books
-
-%description doc
-This package contains documentation of libmtp.
-
 %package utils
 Summary: Tools provided by libmtp
 Group: System/Libraries
@@ -77,7 +71,10 @@ This package contains various tools provided by libmtp.
 %setup -q
 
 %build
-%configure2_5x --disable-static
+%configure2_5x \
+	--disable-static \
+	--disable-rpath
+
 %make
 
 %install
@@ -92,10 +89,7 @@ mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
 install -p -m 644 libmtp.fdi %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 #-- FEDORA COPY
 
-mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
-mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
-
-%clean 
+%clean
 rm -rf %{buildroot}
 
 %if %mdkversion < 200900
@@ -116,10 +110,6 @@ rm -rf %{buildroot}
 %{_libdir}/%{name}.so
 %{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*
-
-%files doc
-%defattr(-,root,root)
-%doc %{_datadir}/doc/%{name}/html
 
 %files utils
 %defattr(-,root,root)
