@@ -1,23 +1,22 @@
-%define	name	libmtp
-%define	version	1.0.6
-%define release %mkrel 2
-%define major	8
+%define major	9
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
 
-Name:		%{name}
+Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	%{version}
-Release:	%{release}
+Version:	1.1.0
+Release:	%mkrel 1
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Patch0:		01-devices_small_fixes.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	libusb-devel doxygen
+BuildRequires:	libusb-devel
+BuildRequires:	doxygen
 #gw for aclocal:
-BuildRequires:  gettext-devel
+BuildRequires:	gettext-devel
+Requires:	udev
 Obsoletes:	%{name}-doc < %{version}
 
 %description
@@ -34,19 +33,20 @@ Meissners and Hubert Figuere's libgphoto2 fork of libptp2 (or is libptp2
 libgphoto2, there is just a different API adapted to portable media 
 players.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
 Obsoletes:	%mklibname mtp 5
 Obsoletes:	%mklibname mtp 0
 Obsoletes:	%mklibname mtp 6
+Obsoletes:	%mklibname mtp 8
 Requires:	%{name}-utils >= %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{develname}
+%package -n %{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -59,10 +59,10 @@ This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
 %package utils
-Summary: Tools provided by libmtp
-Group: System/Libraries
-Requires: %{libname} = %{version}-%{release}
-Provides: mtp-utils = %{version}-%{release}
+Summary:	Tools provided by libmtp
+Group:		System/Libraries
+Requires:	%{libname} = %{version}-%{release}
+Provides:	mtp-utils = %{version}-%{release}
 
 %description utils
 This package contains various tools provided by libmtp.
@@ -80,14 +80,6 @@ This package contains various tools provided by libmtp.
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-#-- FEDORA COPY
-# Install udev rules file.
-mkdir -p %{buildroot}/lib/udev/rules.d
-install -p -m 644 libmtp.rules %{buildroot}/lib/udev/rules.d/60-libmtp.rules
-mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
-install -p -m 644 libmtp.fdi %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
-#-- FEDORA COPY
 
 %clean
 rm -rf %{buildroot}
@@ -114,6 +106,5 @@ rm -rf %{buildroot}
 %files utils
 %defattr(-,root,root)
 /lib/udev/rules.d/*.rules
-%config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 %{_bindir}/*
 /lib/udev/mtp-probe
