@@ -4,7 +4,7 @@
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.0
+Version:	1.1.1
 Release:	%mkrel 1
 Group:		System/Libraries
 License:	LGPLv2+
