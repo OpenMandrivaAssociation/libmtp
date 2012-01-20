@@ -4,14 +4,13 @@
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.1
-Release:	%mkrel 1
+Version:	1.1.2
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://nchc.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Patch0:		01-devices_small_fixes.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libusb-devel
 BuildRequires:	doxygen
 #gw for aclocal:
@@ -78,33 +77,19 @@ This package contains various tools provided by libmtp.
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files -n %{libname}
-%defattr(-,root,root)
 %doc AUTHORS COPYING README
 %{_libdir}/libmtp.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_includedir}/%{name}.h
 %{_libdir}/%{name}.so
 %{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*
 
 %files utils
-%defattr(-,root,root)
 /lib/udev/rules.d/*.rules
 %{_bindir}/*
 /lib/udev/mtp-probe
