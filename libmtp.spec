@@ -78,6 +78,8 @@ This package contains various tools provided by libmtp.
 
 %install
 %makeinstall_std
+find %{buildroot} -type f -name '*.la' -exec rm -f {} \;
+
 
 %files -n %{libname}
 %doc AUTHORS COPYING README
@@ -86,7 +88,6 @@ This package contains various tools provided by libmtp.
 %files -n %{develname}
 %{_includedir}/%{name}.h
 %{_libdir}/%{name}.so
-%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*
 
 %files utils
