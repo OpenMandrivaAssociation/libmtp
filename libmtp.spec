@@ -5,7 +5,7 @@
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
 Version:	1.1.2
-Release:	2
+Release:	3
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
@@ -35,10 +35,6 @@ players.
 %package -n %{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Obsoletes:	%mklibname mtp 5
-Obsoletes:	%mklibname mtp 0
-Obsoletes:	%mklibname mtp 6
-Obsoletes:	%mklibname mtp 8
 Requires:	%{name}-utils >= %{version}-%{release}
 
 %description -n	%{libname}
