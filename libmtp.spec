@@ -1,19 +1,23 @@
-%define	name	libmtp
-%define	version	1.1.4
-%define release %mkrel 1
 %define major	9
 %define	libname	%mklibname mtp %major
 %define develname %mklibname -d mtp
 
-Name:		%{name}
+Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	%{version}
-Release:	%{release}
+Version:	1.1.5
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/project/libmtp/libmtp/%{version}/%{name}-%{version}.tar.gz
-BuildRequires:	libusb-devel doxygen
+Source0:	http://ignum.dl.sourceforge.net/project/libmtp/libmtp/%version/libmtp-%version.tar.gz
+BuildRequires:	libusbx-devel doxygen
+
+%track
+prog %name = {
+	url = http://sourceforge.net/projects/libmtp/files/libmtp/
+	version = %version
+	regex = "Download %name-(__VER__)\.tar\.gz"
+}
 
 %description
 libmtp is an implementation of Microsoft's Media Transfer Protocol (MTP)
