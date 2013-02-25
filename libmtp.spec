@@ -10,7 +10,8 @@ Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://libmtp.sourceforge.net/
 Source0:	http://ignum.dl.sourceforge.net/project/libmtp/libmtp/%version/libmtp-%version.tar.gz
-BuildRequires:	libusbx-devel doxygen
+BuildRequires:	pkgconfig(libusb-1.0)
+BuildRequires:	doxygen
 
 %track
 prog %name = {
