@@ -1,6 +1,6 @@
-%define major 9
-%define libname %mklibname mtp %{major}
-%define devname %mklibname -d mtp
+%define major	9
+%define libname	%mklibname mtp %{major}
+%define devname	%mklibname -d mtp
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
@@ -8,10 +8,10 @@ Version:	1.1.6
 Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://libmtp.sourceforge.net/
+Url:		http://libmtp.sourceforge.net/
 Source0:	http://ignum.dl.sourceforge.net/project/libmtp/libmtp/%{version}/libmtp-%{version}.tar.gz
-BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	doxygen
+BuildRequires:	pkgconfig(libusb-1.0)
 
 %track
 prog %{name} = {
@@ -34,21 +34,23 @@ a fork of libgphoto?). The core implementation is identical to
 libgphoto2, there is just a different API adapted to portable media
 players.
 
-#----------------------------------------------------------------------------
+%package utils
+Summary:	Tools provided by libmtp
+Group:		System/Libraries
+Requires:	%{libname} = %{version}-%{release}
+Provides:	mtp-utils = %{version}-%{release}
+
+%description utils
+This package contains various tools provided by libmtp.
 
 %package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Requires:	%{name}-utils >= %{version}-%{release}
+Suggests:	%{name}-utils >= %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
-
-%files -n %{libname}
-%{_libdir}/libmtp.so.%{major}*
-
-#----------------------------------------------------------------------------
 
 %package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
@@ -60,41 +62,12 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%files -n %{devname}
-%{_includedir}/%{name}.h
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/*
-
-#----------------------------------------------------------------------------
-
 %package doc
 Summary:	Libmtp documentation
 Group:		Books/Computer books
 
 %description doc
 This package contains documentation of libmtp.
-
-%files doc
-%doc %{_datadir}/doc/%{name}/html
-
-#----------------------------------------------------------------------------
-
-%package utils
-Summary:	Tools provided by libmtp
-Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
-Provides:	mtp-utils = %{version}-%{release}
-
-%description utils
-This package contains various tools provided by libmtp.
-
-%files utils
-/lib/udev/rules.d/*.rules
-%config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
-/lib/udev/mtp-probe
-%{_bindir}/*
-
-#----------------------------------------------------------------------------
 
 %prep
 %setup -q
@@ -130,6 +103,20 @@ popd
 mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
 mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
 
-# don't ship .la
-find %{buildroot} -name *.la | xargs rm -f
+%files utils
+/lib/udev/rules.d/*.rules
+%config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
+/lib/udev/mtp-probe
+%{_bindir}/*
+
+%files -n %{libname}
+%{_libdir}/libmtp.so.%{major}*
+
+%files -n %{devname}
+%{_includedir}/%{name}.h
+%{_libdir}/%{name}.so
+%{_libdir}/pkgconfig/*
+
+%files doc
+%doc %{_datadir}/doc/%{name}/html
 
