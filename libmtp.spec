@@ -5,7 +5,7 @@
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
 Version:	1.1.6
-Release:	6
+Release:	7
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
