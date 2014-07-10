@@ -5,11 +5,14 @@
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
 Version:	1.1.6
-Release:	6
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
 Source0:	http://ignum.dl.sourceforge.net/project/libmtp/libmtp/%{version}/libmtp-%{version}.tar.gz
+# (tpg) update this patch in case of old version
+# https://issues.openmandriva.org/show_bug.cgi?id=857
+Patch0:		libmtp-1.1.6-git-music-players.h.patch
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libusb-1.0)
 
@@ -71,6 +74,7 @@ This package contains documentation of libmtp.
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 %configure2_5x \
