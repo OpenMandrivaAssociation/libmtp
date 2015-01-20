@@ -1,11 +1,11 @@
-%define major	9
-%define libname	%mklibname mtp %{major}
-%define devname	%mklibname -d mtp
+%define major 9
+%define libname %mklibname mtp %{major}
+%define devname %mklibname -d mtp
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.6
-Release:	12
+Version:	1.1.8
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
@@ -74,7 +74,6 @@ This package contains documentation of libmtp.
 
 %prep
 %setup -q
-%apply_patches
 
 %build
 %configure \
@@ -123,4 +122,3 @@ mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_dat
 
 %files doc
 %doc %{_datadir}/doc/%{name}/html
-
