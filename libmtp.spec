@@ -1,18 +1,16 @@
-%define major	9
-%define libname	%mklibname mtp %{major}
-%define devname	%mklibname -d mtp
+%define major 9
+%define libname %mklibname mtp %{major}
+%define devname %mklibname -d mtp
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.6
-Release:	6.1
+Version:	1.1.9
+Release:	0.1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
-Source0:	http://ignum.dl.sourceforge.net/project/libmtp/libmtp/%{version}/libmtp-%{version}.tar.gz
-# (tpg) update this patch in case of old version
-# https://issues.openmandriva.org/show_bug.cgi?id=857
-Patch0:		libmtp-1.1.6-git-music-players.h.patch
+Source0:	http://downloads.sourceforge.net/project/libmtp/libmtp/%{version}/%{name}-%{version}.tar.gz
+Patch1:		libmtp-1.1.9-git-music-players.h.patch
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libusb-1.0)
 
@@ -80,6 +78,7 @@ This package contains documentation of libmtp.
 %configure2_5x \
 	--disable-static \
 	--enable-doxygen \
+	--with-udev=/lib/udev \
 	--with-udev-rules=60-libmtp.rules
 %make
 
@@ -109,6 +108,7 @@ mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_dat
 
 %files utils
 /lib/udev/rules.d/*.rules
+/lib/udev/hwdb.d/*.hwdb
 %config(noreplace) %{_datadir}/hal/fdi/information/10freedesktop/10-usb-music-players-libmtp.fdi
 /lib/udev/mtp-probe
 %{_bindir}/*
@@ -123,4 +123,3 @@ mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_dat
 
 %files doc
 %doc %{_datadir}/doc/%{name}/html
-
