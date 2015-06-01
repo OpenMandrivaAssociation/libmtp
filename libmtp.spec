@@ -5,7 +5,7 @@
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
 Version:	1.1.9
-Release:	0.1
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
@@ -75,7 +75,7 @@ This package contains documentation of libmtp.
 %apply_patches
 
 %build
-%configure2_5x \
+%configure \
 	--disable-static \
 	--enable-doxygen \
 	--with-udev=/lib/udev \
