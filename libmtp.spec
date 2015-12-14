@@ -2,15 +2,16 @@
 %define libname %mklibname mtp %{major}
 %define devname %mklibname -d mtp
 
+%define _disable_rebuild_configure 1
+
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.9
-Release:	4
+Version:	1.1.10
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/libmtp/libmtp/%{version}/%{name}-%{version}.tar.gz
-Patch1:		libmtp-1.1.9-git-music-players.h.patch
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libusb-1.0)
 

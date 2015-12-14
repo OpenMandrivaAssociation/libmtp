@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   libmtp-1.1.9.tar.gz: 31bebf3e49612f712f4ab1a03284dedf7044000f
+sources:
+  libmtp-1.1.10.tar.gz: eef71063f957dc700be13558225e10bef935a4c3
