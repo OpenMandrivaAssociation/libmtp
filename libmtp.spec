@@ -15,13 +15,6 @@ Source0:	http://downloads.sourceforge.net/project/libmtp/libmtp/%{version}/%{nam
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libusb-1.0)
 
-%track
-prog %{name} = {
-	url = http://sourceforge.net/projects/libmtp/files/libmtp/
-	version = %{version}
-	regex = "Download %{name}-(__VER__)\.tar\.gz"
-}
-
 %description
 libmtp is an implementation of Microsoft's Media Transfer Protocol (MTP)
 in the form of a library suitable primarily for POSIX compliant
