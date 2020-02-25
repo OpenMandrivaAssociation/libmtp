@@ -65,8 +65,7 @@ Group:		Books/Computer books
 This package contains documentation of libmtp.
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 %configure \
@@ -74,10 +73,11 @@ This package contains documentation of libmtp.
 	--enable-doxygen \
 	--with-udev=/lib/udev \
 	--with-udev-rules=60-libmtp.rules
-%make
+
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 #-- FEDORA COPY
 mkdir -p %{buildroot}%{_datadir}/hal/fdi/information/10freedesktop
@@ -89,13 +89,13 @@ rm -f %{buildroot}%{_bindir}/mtp-getfile
 rm -f %{buildroot}%{_bindir}/mtp-newfolder
 rm -f %{buildroot}%{_bindir}/mtp-sendfile
 rm -f %{buildroot}%{_bindir}/mtp-sendtr
-pushd %{buildroot}%{_bindir}
+cd %{buildroot}%{_bindir}
 ln -sf mtp-connect mtp-delfile
 ln -sf mtp-connect mtp-getfile
 ln -sf mtp-connect mtp-newfolder
 ln -sf mtp-connect mtp-sendfile
 ln -sf mtp-connect mtp-sendtr
-popd
+cd -
 
 mkdir -p %{buildroot}/%{_datadir}/doc/%{name}/html
 mv -f %{buildroot}/%{_datadir}/doc/%{name}-%{version}/html/* %{buildroot}/%{_datadir}/doc/%{name}/html/
