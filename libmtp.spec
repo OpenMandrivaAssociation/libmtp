@@ -6,8 +6,8 @@
 
 Name:		libmtp
 Summary:	Implementation of Microsoft's Media Transfer Protocol
-Version:	1.1.20
-Release:	2
+Version:	1.1.21
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://libmtp.sourceforge.net/
