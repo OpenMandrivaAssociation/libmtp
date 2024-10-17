@@ -10,7 +10,7 @@ Version:	1.1.21
 Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
-Url:		http://libmtp.sourceforge.net/
+Url:		https://libmtp.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/libmtp/libmtp/%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libusb-1.0)
